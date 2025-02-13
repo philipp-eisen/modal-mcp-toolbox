@@ -1,9 +1,12 @@
 [project]
-name = "mcp-modal-sandbox"
-version = "0.1.0"
-description = "Add your description here"
+name = "modal-mcp-toolbox"
+version = "0.1.2"
+description = "A collection of Model Context Protocol (MCP) tools for Modal"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
+authors = [
+    {name = "Philipp Eisen", email = "hello@philippeisen.de"},
+]
 dependencies = [
     "mcp>=1.2.1",
     "modal>=0.73.43",
@@ -12,10 +15,11 @@ dependencies = [
 [dependency-groups]
 dev = [
     "mcp[cli]>=1.2.1",
+    "twine>=6.1.0",
 ]
 
 [tool.ruff]
-line-length = 88
+line-length = 150
 target-version = "py313"
 select = [
     "E",  # pycodestyle errors
@@ -28,7 +32,7 @@ ignore = []
 
 
 [project.scripts]
-mcp-modal-sandbox = "mcp_modal_sandbox:main"
+modal-mcp-toolbox = "modal_mcp_toolbox:main"
 
 [build-system]
 requires = ["hatchling"]
