@@ -28,7 +28,7 @@ This runs against your modal account, so you will need to have a modal account a
 
 ## Installation
 
-This depends on the client that uses the MCP. Here is instructions for Claude and Goose.
+Installation depends on the client that uses the MCP. Here is instructions for Claude and Goose.
 
 ### Claude
 
