@@ -1,4 +1,4 @@
-# Modal MCP Toolbox
+# Modal MCP Toolbox 🛠️
 
 A collection of Model Context Protocol (MCP) tools that run on Modal.
 This let's you extend the capabilities of your LLM in tools such as [Goose](https://block.github.io/goose/) or the [Claude Desktop App](https://claude.ai/download).
@@ -18,15 +18,15 @@ This let's you extend the capabilities of your LLM in tools such as [Goose](http
 
 ![🎬Python Code Execution](./assets/python-sandbox.gif)
 
-## Installation
-
-### Prerequisites
+## Prerequisites
 
 - A [modal account](https://modal.com/signup) and a configured modal CLI.
 - [UV](https://github.com/astral-sh/uv?tab=readme-ov-file#installation)
 - A client that supports MCP. Such as the [Claude Desktop App](https://claude.ai/download) or [Goose](https://block.github.io/goose/)
 
 This runs against your modal account, so you will need to have a modal account and be logged in.
+
+## Installation
 
 This depends on the client that uses the MCP. Here is instructions for Claude and Goose.
 

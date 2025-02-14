@@ -1,6 +1,6 @@
 # based on https://github.com/modal-labs/modal-examples/blob/main/06_gpu_and_ml/stable_diffusion/flux.py
 import logging
-from importlib.metadata import version
+from importlib.metadata import PackageNotFoundError, version
 from io import BytesIO
 from typing import Annotated
 
@@ -104,9 +104,12 @@ class Model:
         return byte_stream.getvalue()
 
 
-@app.function(image=modal.Image.debian_slim().add_local_python_source("modal_mcp_toolbox"))
+@app.function(image=modal.Image.debian_slim().pip_install("mcp").add_local_python_source("modal_mcp_toolbox"))
 def get_version():
-    return version("modal-mcp-toolbox")
+    try:
+        return version("modal_mcp_toolbox")
+    except PackageNotFoundError:
+        return "unknown"
 
 
 def _optimize(pipe):
@@ -126,7 +129,7 @@ def _ensure_app_deployment_is_up_to_date(ctx: Context):
         fn = modal.Function.from_name(app_name, "get_version")
         remote_version = fn.remote()
 
-        if remote_version != version("modal-mcp-toolbox"):
+        if remote_version != version("modal_mcp_toolbox"):
             ctx.info("App is out of date. Deploying ...")
             logger.info("App is out of date. Deploying ...")
             deploy_app(app)
