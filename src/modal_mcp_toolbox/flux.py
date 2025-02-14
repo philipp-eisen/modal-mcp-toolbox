@@ -71,7 +71,7 @@ with flux_image.imports():
 
 @app.cls(
     gpu="H100",  # fastest GPU on Modal
-    container_idle_timeout=1 * MINUTES,
+    container_idle_timeout=5 * MINUTES,
     image=flux_image,
     volumes={
         "/cache": modal.Volume.from_name("hf-hub-cache", create_if_missing=True),
@@ -104,7 +104,10 @@ class Model:
         return byte_stream.getvalue()
 
 
-@app.function(image=modal.Image.debian_slim().pip_install("mcp").add_local_python_source("modal_mcp_toolbox"))
+@app.function(
+    image=modal.Image.debian_slim().pip_install("mcp").add_local_python_source("modal_mcp_toolbox"),
+    container_idle_timeout=5 * MINUTES,
+)
 def get_version():
     try:
         return version("modal_mcp_toolbox")
