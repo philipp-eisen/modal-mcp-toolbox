@@ -1,6 +1,6 @@
 [project]
 name = "modal-mcp-toolbox"
-version = "0.1.6"
+version = "0.1.7"
 description = "A collection of Model Context Protocol (MCP) tools for Modal"
 readme = "README.md"
 requires-python = ">=3.12"

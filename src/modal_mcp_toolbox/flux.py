@@ -70,7 +70,7 @@ with flux_image.imports():
 
 
 @app.cls(
-    gpu="H100",  # fastest GPU on Modal
+    gpu="L40S",
     container_idle_timeout=5 * MINUTES,
     image=flux_image,
     volumes={
