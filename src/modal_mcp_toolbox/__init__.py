@@ -6,11 +6,15 @@ from mcp.server.fastmcp import FastMCP
 
 from modal_mcp_toolbox.code import run_python_code_in_sandbox
 from modal_mcp_toolbox.flux import generate_flux_image
+from modal_mcp_toolbox.modal_cli import modal_get_serve_stdout, modal_start_serve, modal_stop_serve
 
 server = FastMCP("modal-toolbox")
 
 server.add_tool(run_python_code_in_sandbox)
 server.add_tool(generate_flux_image)
+server.add_tool(modal_start_serve)
+server.add_tool(modal_stop_serve)
+server.resource("modal-serve://{file_path}/stdout")(modal_get_serve_stdout)
 
 
 logger = logging.getLogger(__name__)
