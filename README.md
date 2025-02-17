@@ -1,5 +1,7 @@
 # Modal MCP Toolbox 🛠️
 
+[![smithery badge](https://smithery.ai/badge/@philipp-eisen/modal-mcp-toolbox)](https://smithery.ai/server/@philipp-eisen/modal-mcp-toolbox)
+
 A collection of Model Context Protocol (MCP) tools that run on Modal.
 This let's you extend the capabilities of your LLM in tools such as [Goose](https://block.github.io/goose/) or the [Claude Desktop App](https://claude.ai/download).
 
@@ -29,6 +31,14 @@ This runs against your modal account, so you will need to have a modal account a
 ## Installation
 
 Installation depends on the client that uses the MCP. Here is instructions for Claude and Goose.
+
+### Installing via Smithery
+
+To install Modal MCP Toolbox for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@philipp-eisen/modal-mcp-toolbox):
+
+```bash
+npx -y @smithery/cli install @philipp-eisen/modal-mcp-toolbox --client claude
+```
 
 ### Claude
 
