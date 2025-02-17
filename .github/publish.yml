@@ -2,7 +2,8 @@ name: Publish
 
 jobs:
   publish-package:
-    name: python
+    name: Publish Package
+
     runs-on: ubuntu-latest
     permissions:
       id-token: write
