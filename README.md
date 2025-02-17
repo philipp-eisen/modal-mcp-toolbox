@@ -32,14 +32,6 @@ This runs against your modal account, so you will need to have a modal account a
 
 Installation depends on the client that uses the MCP. Here is instructions for Claude and Goose.
 
-### Installing via Smithery
-
-To install Modal MCP Toolbox for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@philipp-eisen/modal-mcp-toolbox):
-
-```bash
-npx -y @smithery/cli install @philipp-eisen/modal-mcp-toolbox --client claude
-```
-
 ### Claude
 
 Got to `Settings > Developer` in the Claude Desktop App. And click on Edit Config.
@@ -74,3 +66,11 @@ uvx modal-mcp-toolbox
 The rest you can fill in as you like.
 
 ![🖼️Goose MCP Settings](./assets/goose-settings-2.png)
+
+### Installing via Smithery (not working currently)
+
+To install Modal MCP Toolbox for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@philipp-eisen/modal-mcp-toolbox):
+
+```bash
+npx -y @smithery/cli install @philipp-eisen/modal-mcp-toolbox --client claude
+```
