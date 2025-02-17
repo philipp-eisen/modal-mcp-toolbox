@@ -1,0 +1,27 @@
+name: Publish
+
+jobs:
+  publish-package:
+    name: Publish Package
+
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: UV Sync
+        run: uv sync --all-extras --dev
+
+      - name: Build
+        run: uv build
+
+      - name: Publish
+        run: uv publish
+
+on:
+  workflow_dispatch: # Allows manual triggering of the workflow
