@@ -29,4 +29,4 @@ COPY --from=uv --chown=app:app /app/.venv /app/.venv
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Set the entrypoint to execute the local project
-ENTRYPOINT ["modal-mcp-toolbox"]
+ENTRYPOINT ["python", "-m", "modal_mcp_toolbox"]
