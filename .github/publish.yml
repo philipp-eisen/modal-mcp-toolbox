@@ -4,6 +4,8 @@ jobs:
   publish-package:
     name: python
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
@@ -11,8 +13,14 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
 
-      - name: Publish the package
-        run: uv build && uv publish
+      - name: UV Sync
+        run: uv sync --all-extras --dev
+
+      - name: Build
+        run: uv build
+
+      - name: Publish
+        run: uv publish
 
 on:
   workflow_dispatch: # Allows manual triggering of the workflow
