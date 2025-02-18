@@ -18,4 +18,4 @@ startCommand:
   commandFunction:
     # A function that produces the CLI command to start the MCP on stdio.
     |-
-    () => ({ command: 'modal-mcp-toolbox', args: [], "env": { "MODAL_TOKEN_ID": config.modalTokenID, "MODAL_TOKEN_SECRET": config.modalTokenSecret } })
+    (config) => ({ command: 'modal-mcp-toolbox', args: [], "env": { MODAL_TOKEN_ID: config.modalTokenID, MODAL_TOKEN_SECRET: config.modalTokenSecret } })
