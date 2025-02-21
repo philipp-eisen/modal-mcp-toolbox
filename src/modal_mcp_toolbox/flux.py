@@ -6,6 +6,7 @@ from typing import Annotated
 
 import modal
 from mcp.server.fastmcp import Context, Image
+from mcp.types import Annotations, ImageContent
 from modal.exception import NotFoundError
 from modal.runner import deploy_app
 from pydantic import Field
@@ -46,7 +47,7 @@ flux_image = (
         "torch==2.5.0",
         f"git+https://github.com/huggingface/diffusers.git@{diffusers_commit_sha}",
         "numpy<2",
-        "mcp",
+        "mcp>=1.3.0",
     )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "HF_HUB_CACHE": "/cache"})
 )
@@ -105,13 +106,15 @@ class Model:
 
 
 @app.function(
-    image=modal.Image.debian_slim().pip_install("mcp").add_local_python_source("modal_mcp_toolbox"),
+    image=modal.Image.debian_slim().pip_install("mcp>=1.3.0").add_local_python_source("modal_mcp_toolbox"),
     container_idle_timeout=5 * MINUTES,
 )
 def get_version():
     try:
+        print(version("modal_mcp_toolbox"))
         return version("modal_mcp_toolbox")
     except PackageNotFoundError:
+        print("unknown")
         return "unknown"
 
 
@@ -127,25 +130,36 @@ def _optimize(pipe):
     return pipe
 
 
-def _ensure_app_deployment_is_up_to_date(ctx: Context):
+async def _ensure_app_deployment_is_up_to_date(ctx: Context):
     try:
         fn = modal.Function.from_name(app_name, "get_version")
-        remote_version = fn.remote()
+        remote_version = await fn.remote.aio()
 
         if remote_version != version("modal_mcp_toolbox"):
-            ctx.info("App is out of date. Deploying ...")
+            await ctx.info("App is out of date. Deploying ...")
             logger.info("App is out of date. Deploying ...")
             deploy_app(app)
     except NotFoundError:
-        ctx.info("App not found. Deploying...")
+        await ctx.info("App not found. Deploying...")
         logger.info("App not found. Deploying...")
         deploy_app(app)
 
 
-def generate_flux_image(prompt: Annotated[str, Field(description="The prompt to generate an image for")], ctx: Context) -> Image:
+async def generate_flux_image(prompt: Annotated[str, Field(description="The prompt to generate an image for")], ctx: Context) -> ImageContent:
     """Let's you generate an image using the Flux model."""
-    _ensure_app_deployment_is_up_to_date(ctx)
+    await _ensure_app_deployment_is_up_to_date(ctx)
 
     cls = modal.Cls.from_name(app_name, Model.__name__)
-    image_bytes = cls().inference.remote(prompt)
-    return Image(data=image_bytes, format=IMAGE_FORMAT)
+    image_bytes = await cls().inference.remote.aio(prompt)
+    image_content = Image(data=image_bytes, format=IMAGE_FORMAT).to_image_content()
+    image_content.annotations = Annotations(audience=["user", "assistant"], priority=0.5)
+    return image_content
+
+
+if __name__ == "__main__":
+    deploy_app(app)
+
+
+@app.local_entrypoint()
+async def main():
+    print(await get_version.remote.aio())
