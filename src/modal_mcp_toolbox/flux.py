@@ -47,7 +47,6 @@ flux_image = (
         "torch==2.5.0",
         f"git+https://github.com/huggingface/diffusers.git@{diffusers_commit_sha}",
         "numpy<2",
-        "mcp>=1.3.0",
     )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "HF_HUB_CACHE": "/cache"})
 )
@@ -59,7 +58,9 @@ flux_image = flux_image.env(
         "TORCHINDUCTOR_FX_GRAPH_CACHE": "1",
     }
 )
-flux_image.add_local_python_source("modal_mcp_toolbox", copy=True)
+# This is a bit of a hack to ensure that the the version modal-mcp-toolbox is the same as the local version.
+# -- not really ideal
+flux_image.pip_install(f"modal-mcp-toolbox=={version('modal-mcp-toolbox')}")
 
 
 app_name = "mcp-toolbox--flux"
@@ -106,7 +107,9 @@ class Model:
 
 
 @app.function(
-    image=modal.Image.debian_slim().pip_install("mcp>=1.3.0").add_local_python_source("modal_mcp_toolbox", copy=True),
+    # This is a bit of a hack to ensure that the the version modal-mcp-toolbox is the same as the local version.
+    # -- not really ideal
+    image=modal.Image.debian_slim().pip_install(f"modal-mcp-toolbox=={version('modal-mcp-toolbox')}"),
     container_idle_timeout=5 * MINUTES,
 )
 def get_version():
