@@ -3,7 +3,7 @@ from typing import Annotated
 
 import modal
 from mcp import ErrorData, McpError
-from mcp.types import INVALID_PARAMS
+from mcp.types import INVALID_PARAMS, Annotations, TextContent
 from pydantic import Field
 
 
@@ -25,7 +25,7 @@ async def run_python_code_in_sandbox(
             "When provided downloads the file(s) from the sandbox to the local file(s)."
         ),
     ] = None,
-) -> str:
+) -> TextContent:
     """
     Runs python code in a safe environment and returns the output.
 
@@ -69,7 +69,7 @@ async def run_python_code_in_sandbox(
                 with sb.open(remote_file, "rb") as f:
                     with open(local_file, "wb") as f2:
                         f2.write(f.read())
-        return exc.stdout.read()
+        return TextContent(type="text", text=exc.stdout.read(), annotations=Annotations(audience=["user", "assistant"], priority=0.5))
 
     finally:
         sb.terminate()
