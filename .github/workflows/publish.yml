@@ -24,4 +24,5 @@ jobs:
         run: uv publish
 
 on:
-  workflow_dispatch: # Allows manual triggering of the workflow
+  release:
+    types: [published]
