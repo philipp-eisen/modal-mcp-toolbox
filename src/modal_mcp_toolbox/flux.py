@@ -59,7 +59,7 @@ flux_image = flux_image.env(
         "TORCHINDUCTOR_FX_GRAPH_CACHE": "1",
     }
 )
-flux_image.add_local_python_source("modal_mcp_toolbox")
+flux_image.add_local_python_source("modal_mcp_toolbox", copy=True)
 
 
 app_name = "mcp-toolbox--flux"
@@ -106,15 +106,15 @@ class Model:
 
 
 @app.function(
-    image=modal.Image.debian_slim().pip_install("mcp>=1.3.0").add_local_python_source("modal_mcp_toolbox"),
+    image=modal.Image.debian_slim().pip_install("mcp>=1.3.0").add_local_python_source("modal_mcp_toolbox", copy=True),
     container_idle_timeout=5 * MINUTES,
 )
 def get_version():
     try:
-        print(version("modal_mcp_toolbox"))
+        print("modal_mcp_toolbox version:", version("modal_mcp_toolbox"))
         return version("modal_mcp_toolbox")
     except PackageNotFoundError:
-        print("unknown")
+        print("modal_mcp_toolbox version: unknown")
         return "unknown"
 
 
