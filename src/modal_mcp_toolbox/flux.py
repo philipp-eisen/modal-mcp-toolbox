@@ -47,6 +47,9 @@ flux_image = (
         "torch==2.5.0",
         f"git+https://github.com/huggingface/diffusers.git@{diffusers_commit_sha}",
         "numpy<2",
+        # This is a bit of a hack to ensure that the the version modal-mcp-toolbox is the same as the local version.
+        # -- not really ideal
+        f"modal-mcp-toolbox=={version('modal-mcp-toolbox')}",
     )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "HF_HUB_CACHE": "/cache"})
 )
@@ -58,9 +61,6 @@ flux_image = flux_image.env(
         "TORCHINDUCTOR_FX_GRAPH_CACHE": "1",
     }
 )
-# This is a bit of a hack to ensure that the the version modal-mcp-toolbox is the same as the local version.
-# -- not really ideal
-flux_image.pip_install(f"modal-mcp-toolbox=={version('modal-mcp-toolbox')}")
 
 
 app_name = "mcp-toolbox--flux"

@@ -1,9 +1,9 @@
 [project]
 name = "modal-mcp-toolbox"
-version = "0.1.10"
+version = "0.1.11"
 description = "A collection of Model Context Protocol (MCP) tools for Modal"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 authors = [
     {name = "Philipp Eisen", email = "hello@philippeisen.de"},
 ]
@@ -19,7 +19,7 @@ dev = [
 
 [tool.ruff]
 line-length = 150
-target-version = "py313"
+target-version = "py310"
 select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
