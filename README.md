@@ -5,6 +5,8 @@
 A collection of Model Context Protocol (MCP) tools that run on Modal.
 This let's you extend the capabilities of your LLM in tools such as [Goose](https://block.github.io/goose/) or the [Claude Desktop App](https://claude.ai/download).
 
+<a href="https://glama.ai/mcp/servers/ai78w0p5mc"><img width="380" height="200" src="https://glama.ai/mcp/servers/ai78w0p5mc/badge" alt="Modal Toolbox MCP server" /></a>
+
 ## Tools
 
 - `run_python_code_in_sandbox`: Let's you run python code in a sandboxed environment.
